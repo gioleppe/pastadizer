@@ -51,21 +51,30 @@ def printchain(a):
     for x in range(maxlen):
         a[x] = int((a[x] * 100) / s)
 
-    print(a)
+    # print(a)
+
 
 # MAIN
 
 import argparse
 
-parser = argparse.ArgumentParser(description='Analyze packet lenght distributions in two different pcaps')
+parser = argparse.ArgumentParser(description='Analyze packet lenght distributions in two or more pcaps')
 parser.add_argument('pcaps', metavar='P', nargs="+", help='the pcaps to analyze')
-parser.add_argument('-f', metavar='F', dest = "filter", nargs=1, help='a filter in BPF syntax to be applied to both pcaps')
+parser.add_argument('-f', metavar='F', dest="filter",
+                    help='a filter in BPF syntax to be applied to both pcaps. default = "tcp"',
+                    default="tcp")
+parser.add_argument('-t', type=int, metavar='T', dest="threshold",
+                    help='The threshold for flux similarity analysis. default = 100',
+                    default=100)
+
 args = parser.parse_args()
 
-print ("Analyzing pcaps: ", args.pcaps)
+print("Analyzing pcaps: ", args.pcaps)
 print("Using BPF filter: ", args.filter)
 
-filter = args.filter[0]
+#print(args.filter[0])
+filter = args.filter
+
 # empty distributions list to subsequently compute pairwise distances
 distributions = []
 
@@ -73,9 +82,9 @@ for pcap in args.pcaps:
     print(pcap, filter)
     pkts = sniff(offline=pcap, prn=pkt_parser, filter=filter)  # Read pkts from pcap_file
 
-    for host in chains:
-        print("From " + host)
-        printchain(chains[host])
+    # for host in chains:
+    # print("From " + host)
+    # printchain(chains[host])
 
     # we put all our distributions in a list
     for host in chains:
@@ -84,7 +93,7 @@ for pcap in args.pcaps:
 # we calculate pairwise distances between distribution vectors
 count = 0
 # distance tolerance
-tol = 100
+tol = args.threshold
 
 pairwise = metrics.pairwise_distances(distributions, metric="euclidean")
 # pp.pprint(pairwise)
@@ -95,5 +104,3 @@ for row in pairwise:
             count += 1
 
 print("{:d} flow pairs had a > {:d} distance".format(count, tol))
-
-
