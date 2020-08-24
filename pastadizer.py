@@ -56,26 +56,39 @@ def printchain(a):
 
 # MAIN
 
-pcap_file="./captures/ssh_27122.pcap"
-#pcap_file="instagram.pcap"
-pkts = sniff(offline=pcap_file, prn=pkt_parser, filter='tcp && port 27122') # Read pkts from pcap_file
+import sys, argparse
 
-for host in chains:
-    print("From "+host)
-    printchain(chains[host])
+parser = argparse.ArgumentParser(description='Analyze packet lenght distributions in two different pcaps')
+parser.add_argument('pcaps', metavar='P', nargs=2, help='the two pcaps to analyze')
+parser.add_argument('-f', metavar='F', dest = "filter", nargs=1, help='a filter in BPF syntax to be applied to both pcaps')
+args = parser.parse_args()
 
-#we put all our distributions in a list
+print ("Analyzing pcaps: ", args.pcaps)
+print("Using BPF filter: ", args.filter)
+
+filter = args.filter[0]
+# empty distributions list to subsequently compute pairwise distances
 distributions = []
-for host in chains:
-    distributions.append(np.array(chains[host]))
 
-#we calculate pairwise distances between distribution vectors
+for pcap in args.pcaps:
+    print(pcap, filter)
+    pkts = sniff(offline=pcap, prn=pkt_parser, filter=filter)  # Read pkts from pcap_file
+
+    for host in chains:
+        print("From " + host)
+        printchain(chains[host])
+
+    # we put all our distributions in a list
+    for host in chains:
+        distributions.append(np.array(chains[host]))
+
+# we calculate pairwise distances between distribution vectors
 count = 0
-#distance tolerance
+# distance tolerance
 tol = 100
 
-pairwise = metrics.pairwise_distances(distributions)
-#pp.pprint(pairwise)
+pairwise = metrics.pairwise_distances(distributions, metric="euclidean")
+# pp.pprint(pairwise)
 
 for row in pairwise:
     for element in row:
@@ -83,3 +96,5 @@ for row in pairwise:
             count += 1
 
 print("{:4d} flow pairs had a > {:3d} distance".format(count, tol))
+
+
