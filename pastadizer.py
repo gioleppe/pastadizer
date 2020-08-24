@@ -1,8 +1,7 @@
-from scapy.all import *
-import math
-from sklearn import metrics
-import pprint as pp
 import numpy as np
+from scapy.all import *
+from scapy.layers.inet import TCP, IP
+from sklearn import metrics
 
 load_layer("ip")
 load_layer("tls")
@@ -56,7 +55,7 @@ def printchain(a):
 
 # MAIN
 
-import sys, argparse
+import argparse
 
 parser = argparse.ArgumentParser(description='Analyze packet lenght distributions in two different pcaps')
 parser.add_argument('pcaps', metavar='P', nargs="+", help='the pcaps to analyze')
@@ -95,6 +94,6 @@ for row in pairwise:
         if (element > tol):
             count += 1
 
-print("{:4d} flow pairs had a > {:3d} distance".format(count, tol))
+print("{:d} flow pairs had a > {:d} distance".format(count, tol))
 
 
