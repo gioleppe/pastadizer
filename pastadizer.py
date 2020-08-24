@@ -59,7 +59,7 @@ def printchain(a):
 import sys, argparse
 
 parser = argparse.ArgumentParser(description='Analyze packet lenght distributions in two different pcaps')
-parser.add_argument('pcaps', metavar='P', nargs=2, help='the two pcaps to analyze')
+parser.add_argument('pcaps', metavar='P', nargs="+", help='the pcaps to analyze')
 parser.add_argument('-f', metavar='F', dest = "filter", nargs=1, help='a filter in BPF syntax to be applied to both pcaps')
 args = parser.parse_args()
 
