@@ -2,6 +2,8 @@ import numpy as np
 from scapy.all import *
 from scapy.layers.inet import TCP, IP
 from sklearn import metrics
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 load_layer("ip")
 load_layer("tls")
@@ -66,6 +68,9 @@ parser.add_argument('-f', metavar='F', dest="filter",
 parser.add_argument('-t', type=int, metavar='T', dest="threshold",
                     help='The threshold for flux similarity analysis. default = 100',
                     default=100)
+parser.add_argument("-m", dest="map",
+                    help="Plot a heatmap with seaborn visualizing the pairwise distance matrix",
+                    action="store_true")
 
 args = parser.parse_args()
 
@@ -102,5 +107,16 @@ for row in pairwise:
     for element in row:
         if (element > tol):
             count += 1
-
+print(len(pairwise))
 print("{:d} flow pairs had a > {:d} distance".format(count, tol))
+
+if args.map:
+    plt.figure(figsize=(8, 8))
+    sns.heatmap(
+        pairwise,
+        cmap='OrRd',
+        linewidth=1,
+        mask=pairwise < tol
+    )
+    plt.show()
+
