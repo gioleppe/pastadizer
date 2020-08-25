@@ -84,7 +84,7 @@ filter = args.filter
 distributions = []
 
 for pcap in args.pcaps:
-    print(pcap, filter)
+    #print(pcap, filter)
     pkts = sniff(offline=pcap, prn=pkt_parser, filter=filter)  # Read pkts from pcap_file
 
     # for host in chains:
@@ -107,7 +107,7 @@ for row in pairwise:
     for element in row:
         if (element > tol):
             count += 1
-print(len(pairwise))
+
 print("{:d} flow pairs had a > {:d} distance".format(count, tol))
 
 if args.map:
