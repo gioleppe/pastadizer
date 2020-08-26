@@ -47,7 +47,7 @@ This is not recommended though, since it
 ~~~
 git clone https://github.com/gioleppe/pastadizer
 cd pastadizer
-python3 pastadizer <first_pcap> <second_pcap> [<other_pcaps>] -f <BPF_filter> [-m]
+python3 ./pastadizer.py <first_pcap> <second_pcap> [<other_pcaps>] -f <BPF_filter> [-m]
 ~~~
 
 You can also use the -h flag to show an help message.
