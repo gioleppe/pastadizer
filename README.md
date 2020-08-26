@@ -35,7 +35,7 @@ This is not recommended though, since it
  to build network flows distribution vectors from a list of .pcap files,
   then it computes euclidean 
  distance between all the flows, finally plotting the number
- of flux pairs that cross a certain threshold input as command line argument.
+ of flow pairs that cross a certain threshold input as command line argument.
  If called with the -m flag, the tool plots a seaborn heatmap showing 
  at first glance how dissimilar flows are by plotting the pairwise distance matrix.
  Flows under the tolerance threshold are masked.
