@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
 import numpy as np
-from scapy.all import *
 from scapy.layers.inet import TCP, IP
+from scapy.main import load_layer
+from scapy.sendrecv import sniff
 from sklearn import metrics
 import seaborn as sns
 import matplotlib.pyplot as plt
