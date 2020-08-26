@@ -2,7 +2,7 @@
 Packet Size Typical Distribution Analyzer for Network Management 19/20 Class.
 
 This tool gets two or more .pcap files as input 
-and outputs the number of flux pairs that are more distant than a certain
+and outputs the number of flow pairs that are more distant than a certain
 threshold.
 
 You can pass the threshold as a command line argument
@@ -24,7 +24,7 @@ conda environment
 
 alternatively, if you're using plain pip, you can use
 
-`pip install scapy numpy scikit-learn seaborn matplotlib`
+`pip3 install scapy numpy scikit-learn seaborn matplotlib`
 
 This is not recommended though, since it
  installs dependencies systemwide and could potentially break other projects.
@@ -32,13 +32,13 @@ This is not recommended though, since it
  ### How it works
  
  The tool uses code at https://github.com/daniele-sartiano/doh 
- to build network fluxes distribution vectors from a list of .pcap files,
+ to build network flows distribution vectors from a list of .pcap files,
   then it computes euclidean 
- distance between all the fluxes, finally plotting the number
+ distance between all the flows, finally plotting the number
  of flux pairs that cross a certain threshold input as command line argument.
  If called with the -m flag, the tool plots a seaborn heatmap showing 
- at first glance how dissimilar fluxes are by plotting the pairwise distance matrix.
- Fluxes under the tolerance threshold are masked.
+ at first glance how dissimilar flows are by plotting the pairwise distance matrix.
+ Flows under the tolerance threshold are masked.
  
  ### Running the tool
  
@@ -47,7 +47,7 @@ This is not recommended though, since it
 ~~~
 git clone https://github.com/gioleppe/pastadizer
 cd pastadizer
-python pastadizer <first_pcap> <second_pcap> [<other_pcaps>] -f <BPF_filter> [-m]
+python3 pastadizer <first_pcap> <second_pcap> [<other_pcaps>] -f <BPF_filter> [-m]
 ~~~
 
 You can also use the -h flag to show an help message.
