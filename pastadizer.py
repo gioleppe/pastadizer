@@ -56,6 +56,11 @@ def printchain(a):
 
     print(a)
 
+def percentages(dists):
+    for flow in dists:
+        s = sum(flow)
+        for x in range(maxlen):
+            flow[x] = int((flow[x] * 100) / s)
 
 # MAIN
 
@@ -97,6 +102,9 @@ for pcap in args.pcaps:
 count = 0
 # distance tolerance
 tol = args.threshold
+
+#get the percentage of packets in each bin
+percentages(distributions)
 
 pairwise = metrics.pairwise_distances(distributions, metric="euclidean")
 # pp.pprint(pairwise)
