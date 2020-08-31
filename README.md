@@ -13,18 +13,16 @@ The tool has the following dependencies:
 - **Scikit-learn 0.23.2**
 - **Scapy 2.4.3** 
 - **Numpy 1.19.1**
-- **Seaborn 0.9.0**
-- **Matplotlib 3.3.1**
 
 To install the required dependencies you 
 can run these command assuming you are in a 
 conda environment
 
-`conda install scapy numpy scikit-learn seaborn matplotlib`
+`conda install scapy numpy scikit-learn`
 
 alternatively, if you're using plain pip, you can use
 
-`pip3 install scapy numpy scikit-learn seaborn matplotlib`
+`pip3 install scapy numpy scikit-learn`
 
 This is not recommended though, since it
  installs dependencies systemwide and could potentially break other projects.
@@ -36,9 +34,6 @@ This is not recommended though, since it
   then it computes euclidean 
  distance between all the flows, finally plotting the number
  of flow pairs that cross a certain threshold input as command line argument.
- If called with the -m flag, the tool plots a seaborn heatmap showing 
- at first glance how dissimilar flows are by plotting the pairwise distance matrix.
- Flows under the tolerance threshold are masked.
  
  ### Running the tool
  
